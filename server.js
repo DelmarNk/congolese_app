@@ -10,9 +10,13 @@ if(process.env.NODE_ENV == "development"){
     const morgan = require('morgan')
     app.use(morgan('dev'))
 }
-
+require('./db.connection')
 app.use(cors())
+app.use('/event', events_controller)
 
+app.get('/', (req,res)=>{
+    res.status(200).send('landing page')
+})
 
 app.listen(PORT,()=>{
     console.log(`Now listening on PORT ${PORT}`)
