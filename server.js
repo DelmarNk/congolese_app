@@ -18,7 +18,7 @@ app.use(cors())
 app.use('/event', events_controller)
 
 app.get('/', (req,res)=>{
-    res.status(200).send('landing page')
+    res.status(200).send('hi there')
 })
 
 app.listen(PORT,()=>{
