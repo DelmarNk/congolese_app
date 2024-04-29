@@ -1,7 +1,6 @@
 const express = require('express')
 const app = express()
 const cors = require('cors')
-const PORT = process.env.PORT
 const events_controller = require('./controllers/events_controller')
 const auth_controller = require('./controllers/auth_controller')
 
@@ -10,6 +9,8 @@ if(process.env.NODE_ENV == "development"){
     const morgan = require('morgan')
     app.use(morgan('dev'))
 }
+
+const PORT = process.env.PORT
 
 app.use(express.json())
 require('./db.connection')

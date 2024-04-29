@@ -1,10 +1,9 @@
 const passport = require('passport')
-const {Strategy, ExtractJwt} = require(passport-jwt)
+const {Strategy, ExtractJwt} = require('passport-jwt')
 const jwt = require('jsonwebtoken')
 const bcrypt = require('bcrypt')
 const User = require('../models/User')
 const {Error} = require('mongoose')
-const { Strategy } = require('passport-jwt')
 
 if(process.env.NODE_ENV == "development"){
     require('dotenv').config()
@@ -16,7 +15,7 @@ const options = {
     secretOrKey: secret
 }
 
-const verify = async(jwt_payload,done)=>{
+const verify = async(jwt_payload, done)=>{
     try{
         const user = await User.findById(jwt_payload.id)
         return done(null,user)
@@ -37,7 +36,9 @@ const handleValidateOwner = (req,doc)=>{
     return doc
 }
 
-const createUserToken = (req,res)=>{
+const requireToken = passport.authenticate('jwt', {session: false})
+
+const createUserToken = (req,user)=>{
     if(!user || !req.body.password || bcrypt.compareSync(req.body.password)){
         const error = new Error('Username or Password is not correct')
         error.statuscode = 422
