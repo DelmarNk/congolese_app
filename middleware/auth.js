@@ -39,7 +39,7 @@ const handleValidateOwner = (req,doc)=>{
 const requireToken = passport.authenticate('jwt', {session: false})
 
 const createUserToken = (req,user)=>{
-    if(!user || !req.body.password || bcrypt.compareSync(req.body.password)){
+    if(!user || !req.body.password || bcrypt.compareSync(user.password,req.body.password)){
         const error = new Error('Username or Password is not correct')
         error.statuscode = 422
         throw error

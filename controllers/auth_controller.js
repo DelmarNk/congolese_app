@@ -16,4 +16,42 @@ router.post('/register', async(req,res)=>{
     }
 })
 
+router.post('/login', async(req,res)=>{
+    try{
+        const loggingUser = req.body.username
+        const foundUser = await User.findOne({username: loggingUser})
+        const token = await createUserToken(req, foundUser)
+        res.status(200).json({user: foundUser, isLoggedIn: true, token})
+    } catch(error){
+        res.status(400).json(error.message)
+    }
+})
+
+router.get('/user/:id', requireToken, async(req,res)=>{
+    try{
+        const user = await User.findById(req.params.id)
+        res.status(201).json({id: user._id, username: user.username})
+    } catch(error){
+        res.status(400).json(error)
+    }
+})
+
+router.put('/user/update/:id', requireToken, async(req,res)=>{
+    try{
+        const user = await User.findByIdAndUpdate(req.params.id, req.body, {new: true})
+        res.status(201).json(user)
+    } catch(error){
+        res.status(400).json(error)
+    }
+})
+
+router.delete('/user/delete/:id', requireToken, async(req,res)=>{
+    try{
+        const user = await User.findByIdAndDelete(req.params.id)
+        res.status(200).json(user)
+    } catch(error){
+        res.status(400).json(error.message)
+    }
+})
+
 module.exports = router
