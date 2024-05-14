@@ -1,8 +1,8 @@
 const mongoose = require('mongoose')
 const {Schema} = mongoose;
 const UserSchema = new Schema({
-    username: String,
-    email: String,
+    username: {type: String, unique: true},
+    email: {type: String, unique: true},
     phoneNumber: Number,
     password: String
 })
