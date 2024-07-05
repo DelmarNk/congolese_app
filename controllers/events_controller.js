@@ -20,12 +20,12 @@ router.post('/', async(req,res)=>{
     } catch(error){
         res.status(400).json(error)
     }
-})
+}) 
 
 //show route
 router.get('/:id', async (req,res)=>{
     try{
-        const event = await Events.findById(req.params.id)
+        const event = await Events.findById(req.params.id).populate('attendees')
         res.status(201).json(event)
     } catch(error){
         res.status(400).json(error)}

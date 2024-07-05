@@ -5,7 +5,8 @@ const EventsSchema = new Schema({
     image: String,
     location: String,
     title: String,
-    time: Date
+    time: Date,
+    attendees: [{type: Schema.Types.ObjectId, ref: 'User'}]
 })
 
 const Events = mongoose.model('events', EventsSchema)
